@@ -1,0 +1,150 @@
+# app.py
+import streamlit as st
+from datetime import date
+
+st.set_page_config(page_title="Ezue Legal Assistant", layout="centered")
+st.title("Ezue Legal Assistant")
+st.subheader("Automated Litigation Suite")
+
+# Document selector
+process = st.selectbox("Choose a court document to generate:", [
+    "Pre-Action Notice",
+    "Statement of Claim",
+    "Affidavit",
+    "Notice of Appeal",
+    "Appellant Brief",
+    "Respondent Brief",
+    "Reply on Point of Law",
+    "Preliminary Objection",
+    "Written Address",
+    "Interrogatories",
+    "Deed of Settlement"
+])
+
+# Document selector – single correct selectbox
+process = st.selectbox("Choose a court document to generate:", [
+    "Pre-Action Notice",
+    "Writ of Summons"
+])
+
+# --- Pre-Action Notice ---
+if process == "Pre-Action Notice":
+    st.header("📌 Draft a Pre-Action Notice")
+
+    court = st.text_input("Court Name")
+    suit_number = st.text_input("Suit Number")
+    claimant = st.text_input("Claimant's Name")
+    defendant = st.text_input("Defendant's Name")
+    claim_summary = st.text_area("Brief Summary of the Claim")
+    deadline = st.date_input("Deadline to Respond", min_value=date.today())
+
+    if st.button("Generate Notice"):
+        notice = f"""
+        PRE-ACTION NOTICE
+
+        To: {defendant}
+
+        Take notice that {claimant} intends to initiate legal proceedings against you in the {court}.
+
+        SUIT NO: {suit_number}
+
+        CLAIM SUMMARY:
+        {claim_summary}
+
+        You are hereby required to respond within {deadline.strftime('%B %d, %Y')} failing which the action shall proceed in court.
+
+        Dated this {date.today().strftime('%B %d, %Y')}.
+        """
+
+        st.code(notice, language='markdown')
+        st.success("✅ Pre-Action Notice generated successfully.")
+
+# --- Writ of Summons ---
+elif process == "Writ of Summons":
+    st.header("🧾 Writ of Summons Suite")
+
+    court = st.text_input("Court Name")
+    division = st.text_input("Judicial Division / Registry")
+    suit_number = st.text_input("Suit Number")
+    claimant = st.text_input("Claimant's Full Name")
+    claimant_address = st.text_input("Claimant's Address")
+    defendant = st.text_input("Defendant's Full Name")
+    subject = st.text_area("Brief Subject Matter")
+    reliefs = st.text_area("Reliefs Being Sought")
+    witnesses = st.text_area("List of Witnesses (comma separated)")
+    documents = st.text_area("List of Documents (comma separated)")
+    today = date.today().strftime("%B %d, %Y")
+
+    if st.button("Generate All Documents"):
+        heading = f"IN THE {court.upper()}\\nIN THE {division.upper()} DIVISION\\nSUIT NO: {suit_number}\\n\\nBETWEEN\\n{claimant.upper()} - CLAIMANT\\nAND\\n{defendant.upper()} - DEFENDANT"
+
+        writ = f"""{heading}
+
+WRIT OF SUMMONS
+
+To: {defendant}
+
+You are hereby commanded that within 30 days after the service of this writ on you, inclusive of the day of such service, you do cause an appearance to be entered for you in an action at the suit of {claimant}, and take notice that in default of your doing so, the Claimant may proceed therein, and judgment may be given in your absence.
+
+Dated this {today}
+"""
+
+        claim = f"""{heading}
+
+STATEMENT OF CLAIM
+
+1. The Claimant is {claimant}, of {claimant_address}.
+2. The Defendant is {defendant}.
+3. The cause of action is as follows:
+   {subject}
+
+4. The Claimant claims the following reliefs:
+   {reliefs}
+
+WHEREOF the Claimant claims as per the reliefs stated above.
+
+Dated this {today}
+"""
+
+        witness_list = f"""{heading}
+
+LIST OF WITNESSES
+
+1. {witnesses.replace(',', '\\n2. ')}
+"""
+
+        doc_list = f"""{heading}
+
+LIST OF DOCUMENTS TO BE RELIED UPON
+
+1. {documents.replace(',', '\\n2. ')}
+"""
+
+        oath = f"""{heading}
+
+CLAIMANT’S WRITTEN STATEMENT ON OATH
+
+I, {claimant.upper()}, of {claimant_address}, do hereby make oath and state as follows:
+
+1. That I am the Claimant in this suit.
+2. That I have read the Statement of Claim and the facts stated therein are true and correct to the best of my knowledge, information, and belief.
+3. That I depose to this affidavit in good faith conscientiously believing the contents to be true and correct and in accordance with the Oaths Act.
+
+DEPONENT: ________________________
+DATE: {today}
+
+BEFORE ME:
+COMMISSIONER FOR OATHS: ________________________
+"""
+
+        st.success("✅ All Court Documents Generated")
+        st.subheader("📜 Writ of Summons")
+        st.text_area("Writ Preview", writ, height=250)
+        st.subheader("📄 Statement of Claim")
+        st.text_area("Claim Preview", claim, height=300)
+        st.subheader("🧾 List of Witnesses")
+        st.text_area("Witness List", witness_list, height=200)
+        st.subheader("📂 List of Documents")
+        st.text_area("Document List", doc_list, height=200)
+        st.subheader("📝 Claimant’s Statement on Oath")
+        st.text_area("Statement on Oath", oath, height=350)
