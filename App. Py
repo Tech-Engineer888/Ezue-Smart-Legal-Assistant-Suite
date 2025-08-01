@@ -22,6 +22,10 @@ process = st.selectbox("Choose a court document to generate:", [
 ])
 
 # Only Pre-Action Notice is active for now
+if process = st.selectbox("Choose a document to generate:", [
+    "Pre-Action Notice",
+    "Writ of Summons"
+])
 if process == "Pre-Action Notice":
     st.header("Draft a Pre-Action Notice")
 
