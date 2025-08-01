@@ -26,7 +26,6 @@ if process = st.selectbox("Choose a document to generate:", [
     "Pre-Action Notice",
     "Writ of Summons"
 ])
-if process == "Pre-Action Notice":
     st.header("Draft a Pre-Action Notice")
 
     court = st.text_input("Court Name")
