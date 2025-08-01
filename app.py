@@ -164,4 +164,20 @@ COMMISSIONER FOR OATHS: ________________________
         st.text_area("Writ Preview", writ, height=250)
         st.subheader("📄 Statement of Claim")
         st.text_area("Claim Preview", claim, height=300)
-        st.subheader("
+        
+    st.success("✅ All Court Documents Generated")
+
+        st.subheader("📜 Writ of Summons")
+        st.text_area("Writ Preview", writ, height=250)
+
+        st.subheader("📄 Statement of Claim")
+        st.text_area("Claim Preview", claim, height=300)
+
+        st.subheader("🧾 List of Witnesses")
+        st.text_area("Witness List", witness_list, height=200)
+
+        st.subheader("📂 List of Documents")
+        st.text_area("Document List", doc_list, height=200)
+
+        st.subheader("📝 Claimant’s Statement on Oath")
+        st.text_area("Statement on Oath", oath, height=350)    
