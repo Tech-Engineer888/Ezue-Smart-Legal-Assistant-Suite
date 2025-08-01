@@ -81,11 +81,8 @@ Yours faithfully,
 
         st.success("✅ Pre-Action Notice Generated")
         st.download_button("📥 Download Notice as Text", document, file_name="pre_action_notice.txt")
-        st.text_area("📄 Preview", document, height=400)
+        st.text_area("📄 Preview", document, height=400) 
 
-# ------------- Placeholders for Other Documents ---------------
-else:
-    
 elif process == "Writ of Summons":
     st.header("ðŸ§¾ Writ of Summons Suite")
 
