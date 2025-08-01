@@ -1,0 +1,53 @@
+# app.py
+import streamlit as st
+from datetime import date
+
+st.set_page_config(page_title="Ezue Legal Assistant", layout="centered")
+st.title("Ezue Legal Assistant")
+st.subheader("Automated Litigation Suite")
+
+# Document selector
+process = st.selectbox("Choose a court document to generate:", [
+    "Pre-Action Notice",
+    "Statement of Claim",
+    "Affidavit",
+    "Notice of Appeal",
+    "Appellant Brief",
+    "Respondent Brief",
+    "Reply on Point of Law",
+    "Preliminary Objection",
+    "Written Address",
+    "Interrogatories",
+    "Deed of Settlement"
+])
+
+# Only Pre-Action Notice is active for now
+if process == "Pre-Action Notice":
+    st.header("Draft a Pre-Action Notice")
+
+    court = st.text_input("Court Name")
+    suit_number = st.text_input("Suit Number")
+    claimant = st.text_input("Claimant's Name")
+    defendant = st.text_input("Defendant's Name")
+    claim_summary = st.text_area("Brief Summary of the Claim")
+    deadline = st.date_input("Deadline to Respond", min_value=date.today())
+
+    if st.button("Generate Notice"):
+        st.subheader("📄 Pre-Action Notice:")
+        notice = f"""
+        PRE-ACTION NOTICE
+
+        To: {defendant}
+        Take notice that {claimant} intends to initiate legal proceedings against you in the {court}.
+
+        SUIT NO: {suit_number}
+
+        CLAIM SUMMARY:
+        {claim_summary}
+
+        You are hereby required to respond within {deadline.strftime('%B %d, %Y')} failing which the action shall proceed in court.
+
+        Dated this {date.today().strftime('%B %d, %Y')}.
+        """
+        st.code(notice, language='markdown')
+        st.success("Pre-Action Notice generated successfully.")
